@@ -192,17 +192,17 @@ public class ProductListFrame extends JFrame implements ActionListener {
         add(departmentSpinner, layoutConst);
 
         layoutConst = new GridBagConstraints();
-        layoutConst.insets = new Insets(0, 10, 10, 5);
-        layoutConst.fill = GridBagConstraints.HORIZONTAL;
-        layoutConst.gridx = 5;
-        layoutConst.gridy = 4;
+        layoutConst.insets = new Insets(0, 5, 10, 10);
+        // layoutConst.fill = GridBagConstraints.HORIZONTAL;
+        layoutConst.gridx = 0;
+        layoutConst.gridy = 5;
         add(addButton, layoutConst);
 
         layoutConst = new GridBagConstraints();
         layoutConst.insets = new Insets(0, 5, 10, 10);
-        layoutConst.fill = GridBagConstraints.HORIZONTAL;
-        layoutConst.gridx = 6;
-        layoutConst.gridy = 4;
+        // dlayoutConst.fill = GridBagConstraints.HORIZONTAL;
+        layoutConst.gridx = 1;
+        layoutConst.gridy = 5;
         add(quitButton, layoutConst);
     }
 
@@ -233,11 +233,15 @@ public class ProductListFrame extends JFrame implements ActionListener {
         product1.setManufacturer("Campbell");
 
         productArray.add(product1);
+
+        /*
         productArray.add(new Product());
         productArray.add(new Product());
         productArray.add(new Product());
         productArray.add(new Product());
+        */
         
+
         /* 
         for (int index = 1; index < INITIAL_PRODUCT_LIST_SIZE; ++index) {
            productArray.add(new Product());
@@ -282,14 +286,14 @@ public class ProductListFrame extends JFrame implements ActionListener {
             price = ((Number) priceField.getValue()).intValue();
             department = (String) departmentSpinner.getValue();
 
-            productElement = new Product(productName, price);         // Create new Seat object
+            productElement = new Product(productName, price);         // Create new Product object
             productElement.setManufacturer(manufacturer);
             productElement.setProductID(productID);
             productElement.setDepartment(department);
 
-            productList.add(productElement); // Add seat to ArrayList
+            productList.add(productElement); // Add product to ArrayList
 
-            updateTable();                        // Synchronize table with sts ArrayList
+            updateTable();                        // Synchronize table with its ArrayList
 
             // Show success dialog
             JOptionPane.showMessageDialog(this, "Product Added.");
