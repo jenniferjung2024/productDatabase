@@ -6,6 +6,7 @@ import javax.swing.JTextField;
 import javax.swing.JFormattedTextField;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerListModel;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.JButton;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -90,8 +91,11 @@ public class ProductListFrame extends JFrame implements ActionListener {
         quitButton.addActionListener(this);
 
         // Initialize table
-        productListTable = new JTable(tableVals, columnHeadings);
+        DefaultTableModel model = new DefaultTableModel(columnHeadings, 0);
+        productListTable = new JTable(model);
         productListTable.setEnabled(false); // Prevent user input via table
+        // productListTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+        // model.addRow(columnHeadings);
 
         // Add components using GridBagLayout
         setLayout(new GridBagLayout());
@@ -232,7 +236,7 @@ public class ProductListFrame extends JFrame implements ActionListener {
         product1.setDepartment("FOOD");
         product1.setManufacturer("Campbell");
 
-        productArray.add(product1);
+        // productArray.add(product1);
 
         /*
         productArray.add(new Product());
@@ -292,6 +296,9 @@ public class ProductListFrame extends JFrame implements ActionListener {
             productElement.setDepartment(department);
 
             productList.add(productElement); // Add product to ArrayList
+            DefaultTableModel model = (DefaultTableModel)productListTable.getModel();
+            Object[] row = { productElement.getProductID(), productElement.getProductName(), productElement.getManufacturer(), productElement.getPrice(), productElement.getDepartment() };
+            model.addRow(row);
 
             updateTable();                        // Synchronize table with its ArrayList
 
