@@ -50,12 +50,6 @@ public class ProductListFrame extends JFrame implements ActionListener {
         // Set frame's title
         setTitle("Product List");
   
-        // Create an ArrayList and add 5 instances of the product object
-        productList = new ArrayList<Product>();
-        productListAddInitialElements(productList);
-
-        makeEmpty(productList);
-
         // Create table
         tableLabel = new JLabel("Product List - Details:");
         productIDLabel = new JLabel("Product ID:");
@@ -94,8 +88,14 @@ public class ProductListFrame extends JFrame implements ActionListener {
         DefaultTableModel model = new DefaultTableModel(columnHeadings, 0);
         productListTable = new JTable(model);
         productListTable.setEnabled(false); // Prevent user input via table
-        // productListTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-        // model.addRow(columnHeadings);
+
+
+        // Create an ArrayList and add 5 instances of the product object
+         productList = new ArrayList<Product>();
+        productListAddInitialElements(productList, model);
+        
+        makeEmpty(productList, model);
+
 
         // Add components using GridBagLayout
         setLayout(new GridBagLayout());
@@ -227,7 +227,7 @@ public class ProductListFrame extends JFrame implements ActionListener {
 
     }
 
-    public static void productListAddInitialElements(ArrayList<Product> productArray) {
+    public void productListAddInitialElements(ArrayList<Product> productArray, DefaultTableModel tableModel) {
 
         final int INITIAL_PRODUCT_LIST_SIZE = 5; 
 
@@ -236,30 +236,29 @@ public class ProductListFrame extends JFrame implements ActionListener {
         product1.setDepartment("FOOD");
         product1.setManufacturer("Campbell");
 
-        // productArray.add(product1);
-
-        /*
-        productArray.add(new Product());
-        productArray.add(new Product());
-        productArray.add(new Product());
-        productArray.add(new Product());
-        */
-        
+        productArray.add(product1);
 
         /* 
-        for (int index = 1; index < INITIAL_PRODUCT_LIST_SIZE; ++index) {
+        for (int index = 0; index < INITIAL_PRODUCT_LIST_SIZE; ++index) {
            productArray.add(new Product());
         }
         */
 
+        Object[] row = { productArray.get(0).getProductID(), productArray.get(0).getProductName(), productArray.get(0).getManufacturer(), productArray.get(0).getPrice(), productArray.get(0).getDepartment() };
+        tableModel.addRow(row);
+
     }
 
-    public static void makeEmpty(ArrayList<Product> productArray) {
+    public static void makeEmpty(ArrayList<Product> productArray, DefaultTableModel tableModel) {
+
+
+        tableModel.removeRow(tableModel.getRowCount() - 1);
 
         int index;      // Loop index
         
         for (index = 0; index < productArray.size(); ++ index) {
            productArray.get(index).makeEmpty();
+
         }
 
     }
