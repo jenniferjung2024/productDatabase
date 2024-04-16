@@ -6,6 +6,7 @@ import javax.swing.JTextField;
 import javax.swing.JFormattedTextField;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerListModel;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.JButton;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -49,12 +50,6 @@ public class ProductListFrame extends JFrame implements ActionListener {
         // Set frame's title
         setTitle("Product List");
   
-        // Create an ArrayList and add 5 instances of the product object
-        productList = new ArrayList<Product>();
-        productListAddInitialElements(productList);
-
-        makeEmpty(productList);
-
         // Create table
         tableLabel = new JLabel("Product List - Details:");
         productIDLabel = new JLabel("Product ID:");
@@ -90,8 +85,17 @@ public class ProductListFrame extends JFrame implements ActionListener {
         quitButton.addActionListener(this);
 
         // Initialize table
-        productListTable = new JTable(tableVals, columnHeadings);
+        DefaultTableModel model = new DefaultTableModel(columnHeadings, 0);
+        productListTable = new JTable(model);
         productListTable.setEnabled(false); // Prevent user input via table
+
+
+        // Create an ArrayList and add 5 instances of the product object
+         productList = new ArrayList<Product>();
+        productListAddInitialElements(productList, model);
+        
+        makeEmpty(productList, model);
+
 
         // Add components using GridBagLayout
         setLayout(new GridBagLayout());
@@ -192,17 +196,17 @@ public class ProductListFrame extends JFrame implements ActionListener {
         add(departmentSpinner, layoutConst);
 
         layoutConst = new GridBagConstraints();
-        layoutConst.insets = new Insets(0, 10, 10, 5);
-        layoutConst.fill = GridBagConstraints.HORIZONTAL;
-        layoutConst.gridx = 5;
-        layoutConst.gridy = 4;
+        layoutConst.insets = new Insets(0, 5, 10, 10);
+        // layoutConst.fill = GridBagConstraints.HORIZONTAL;
+        layoutConst.gridx = 0;
+        layoutConst.gridy = 5;
         add(addButton, layoutConst);
 
         layoutConst = new GridBagConstraints();
         layoutConst.insets = new Insets(0, 5, 10, 10);
-        layoutConst.fill = GridBagConstraints.HORIZONTAL;
-        layoutConst.gridx = 6;
-        layoutConst.gridy = 4;
+        // dlayoutConst.fill = GridBagConstraints.HORIZONTAL;
+        layoutConst.gridx = 1;
+        layoutConst.gridy = 5;
         add(quitButton, layoutConst);
     }
 
@@ -223,7 +227,7 @@ public class ProductListFrame extends JFrame implements ActionListener {
 
     }
 
-    public static void productListAddInitialElements(ArrayList<Product> productArray) {
+    public void productListAddInitialElements(ArrayList<Product> productArray, DefaultTableModel tableModel) {
 
         final int INITIAL_PRODUCT_LIST_SIZE = 5; 
 
@@ -233,25 +237,28 @@ public class ProductListFrame extends JFrame implements ActionListener {
         product1.setManufacturer("Campbell");
 
         productArray.add(product1);
-        productArray.add(new Product());
-        productArray.add(new Product());
-        productArray.add(new Product());
-        productArray.add(new Product());
-        
+
         /* 
-        for (int index = 1; index < INITIAL_PRODUCT_LIST_SIZE; ++index) {
+        for (int index = 0; index < INITIAL_PRODUCT_LIST_SIZE; ++index) {
            productArray.add(new Product());
         }
         */
 
+        Object[] row = { productArray.get(0).getProductID(), productArray.get(0).getProductName(), productArray.get(0).getManufacturer(), productArray.get(0).getPrice(), productArray.get(0).getDepartment() };
+        tableModel.addRow(row);
+
     }
 
-    public static void makeEmpty(ArrayList<Product> productArray) {
+    public static void makeEmpty(ArrayList<Product> productArray, DefaultTableModel tableModel) {
+
+
+        tableModel.removeRow(tableModel.getRowCount() - 1);
 
         int index;      // Loop index
         
         for (index = 0; index < productArray.size(); ++ index) {
            productArray.get(index).makeEmpty();
+
         }
 
     }
@@ -282,14 +289,17 @@ public class ProductListFrame extends JFrame implements ActionListener {
             price = ((Number) priceField.getValue()).intValue();
             department = (String) departmentSpinner.getValue();
 
-            productElement = new Product(productName, price);         // Create new Seat object
+            productElement = new Product(productName, price);         // Create new Product object
             productElement.setManufacturer(manufacturer);
             productElement.setProductID(productID);
             productElement.setDepartment(department);
 
-            productList.add(productElement); // Add seat to ArrayList
+            productList.add(productElement); // Add product to ArrayList
+            DefaultTableModel model = (DefaultTableModel)productListTable.getModel();
+            Object[] row = { productElement.getProductID(), productElement.getProductName(), productElement.getManufacturer(), productElement.getPrice(), productElement.getDepartment() };
+            model.addRow(row);
 
-            updateTable();                        // Synchronize table with sts ArrayList
+            updateTable();                        // Synchronize table with its ArrayList
 
             // Show success dialog
             JOptionPane.showMessageDialog(this, "Product Added.");
