@@ -58,13 +58,13 @@ public class ProductListFrame extends JFrame implements ActionListener {
         priceLabel = new JLabel("Price:");
         departmentLabel = new JLabel("Department:");
 
-        productIDField = new JTextField(20);
+        productIDField = new JTextField(10);
         productIDField.setEditable(true);
 
         productNameField = new JTextField(20);
         productNameField.setEditable(true);
 
-        manufacturerField = new JTextField(20);
+        manufacturerField = new JTextField(15);
         manufacturerField.setEditable(true);
 
         currencyFormat = NumberFormat.getCurrencyInstance();
@@ -135,7 +135,7 @@ public class ProductListFrame extends JFrame implements ActionListener {
         layoutConst.fill = GridBagConstraints.HORIZONTAL;
         layoutConst.gridx = 0;
         layoutConst.gridy = 4;
-        layoutConst.gridwidth = 1;
+        layoutConst.gridheight = 1;
         add(productIDField, layoutConst);
 
         layoutConst = new GridBagConstraints();
@@ -161,7 +161,7 @@ public class ProductListFrame extends JFrame implements ActionListener {
 
         layoutConst = new GridBagConstraints();
         layoutConst.insets = new Insets(1, 10, 10, 0);
-        layoutConst.fill = GridBagConstraints.HORIZONTAL;
+        // layoutConst.fill = GridBagConstraints.HORIZONTAL;
         layoutConst.gridx = 2;
         layoutConst.gridy = 4;
         add(manufacturerField, layoutConst);
