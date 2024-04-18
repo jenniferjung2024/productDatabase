@@ -94,7 +94,7 @@ public class ProductListFrame extends JFrame implements ActionListener {
          productList = new ArrayList<Product>();
         productListAddInitialElements(productList, model);
         
-        makeEmpty(productList, model);
+        // makeEmpty(productList, model);
 
 
         // Add components using GridBagLayout
@@ -229,25 +229,51 @@ public class ProductListFrame extends JFrame implements ActionListener {
 
     public void productListAddInitialElements(ArrayList<Product> productArray, DefaultTableModel tableModel) {
 
-        final int INITIAL_PRODUCT_LIST_SIZE = 5; 
+        // final int INITIAL_PRODUCT_LIST_SIZE = 5; // as per instructions
 
-        Product product1 = new Product("Chicken Noodle Soup", 1.50);
-        product1.setProductID("0010");
-        product1.setDepartment("FOOD");
-        product1.setManufacturer("Campbell");
+        Product product = new Product("Chicken Noodle Soup", 1.99);
+        product.setProductID("0010");
+        product.setDepartment("FOOD");
+        product.setManufacturer("Campbell");
 
-        productArray.add(product1);
+        productArray.add(product);
 
-        /* 
-        for (int index = 0; index < INITIAL_PRODUCT_LIST_SIZE; ++index) {
-           productArray.add(new Product());
-        }
-        */
+        product = new Product("Ring Set - Gold, 7 pack", 9.99);
+        product.setProductID("0020");
+        product.setDepartment("ACCESSORIES");
+        product.setManufacturer("Claire's");
 
-        Object[] row = { productArray.get(0).getProductID(), productArray.get(0).getProductName(), productArray.get(0).getManufacturer(), productArray.get(0).getPrice(), productArray.get(0).getDepartment() };
-        tableModel.addRow(row);
+        productArray.add(product);
+
+        product = new Product("Traditional Soccer Ball - Size 5, Black/White", 23.99);
+        product.setProductID("0033");
+        product.setDepartment("SPORTING_GOODS");
+        product.setManufacturer("Wilson");
+
+        productArray.add(product);
+
+        product = new Product("Vinyl Ink Longwear No-Budge Liquid Lipcolor, Cheeky", 12.49);
+        product.setProductID("0045");
+        product.setDepartment("HEALTHandBEAUTY");
+        product.setManufacturer("Maybelline");
+
+        productArray.add(product);
+
+        product = new Product("Super-Plush Luxury Cotton Bath Towels - 2 pack", 69.99);
+        product.setProductID("0109");
+        product.setDepartment("HOME");
+        product.setManufacturer("Brooklinen");
+
+        productArray.add(product);
+
+        // for (int index = 0; index < INITIAL_PRODUCT_LIST_SIZE; ++index) {
+        for (int index = 0; index < productArray.size(); ++index) {  // more dynamic
+            Object[] row = { productArray.get(index).getProductID(), productArray.get(index).getProductName(), productArray.get(index).getManufacturer(), productArray.get(index).getPrice(), productArray.get(index).getDepartment() };
+            tableModel.addRow(row);
+        }       
 
     }
+    
 
     public static void makeEmpty(ArrayList<Product> productArray, DefaultTableModel tableModel) {
 
