@@ -6,7 +6,11 @@ Instructions:
 
 Build a GUI application using Java Swing using the Seat Reservation System example in Zybooks and one of the 3 custom classes from your Midterm Project.
 
-Some information from the Midterm Project include:
+Seat Reservation System example code: https://jenniferjung2024.wordpress.com/reference-for-java-swing-assignment/
+
+....
+
+And, some information from the Midterm Project include:
 
 ![image](https://github.com/jenniferjung2024/productDatabase/assets/164530692/a30ecb9f-68a3-474d-ab77-cef294c1a2f4)
 
