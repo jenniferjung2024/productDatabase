@@ -342,6 +342,8 @@ public class ProductListFrame extends JFrame implements ActionListener {
         else if (sourceEvent == deleteAllButton) {
             DefaultTableModel model = (DefaultTableModel)productListTable.getModel();
             makeEmpty(productList, model);
+
+            updateTable();
         }
 
 
