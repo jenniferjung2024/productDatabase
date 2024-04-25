@@ -35,6 +35,7 @@ public class ProductListFrame extends JFrame implements ActionListener {
     private JButton addButton;                 
     private JButton quitButton;
     private JButton deleteAllButton;
+    private JButton deleteLastButton;
     private JTable productListTable; 
 
 
@@ -88,6 +89,9 @@ public class ProductListFrame extends JFrame implements ActionListener {
 
         deleteAllButton = new JButton("Delete All");
         deleteAllButton.addActionListener(this);
+        
+        deleteLastButton = new JButton("Delete Last");
+        deleteLastButton.addActionListener(this);
 
         // Initialize table
         DefaultTableModel model = new DefaultTableModel(columnHeadings, 0);
@@ -213,6 +217,12 @@ public class ProductListFrame extends JFrame implements ActionListener {
 
         layoutConst = new GridBagConstraints();
         layoutConst.insets = new Insets(0, 5, 10, 10);
+        layoutConst.gridx = 3;
+        layoutConst.gridy = 5;
+        add(deleteLastButton, layoutConst);
+
+        layoutConst = new GridBagConstraints();
+        layoutConst.insets = new Insets(0, 5, 10, 10);
         layoutConst.gridx = 4;
         layoutConst.gridy = 5;
         add(deleteAllButton, layoutConst);
@@ -290,8 +300,6 @@ public class ProductListFrame extends JFrame implements ActionListener {
         for (index = 0; index < productArray.size(); ++ index) {
             // tableModel.removeRow(tableModel.getRowCount() - 1);  // empty all rows
             productArray.get(index).makeEmpty();
-
-
         }
 
     }
@@ -339,11 +347,32 @@ public class ProductListFrame extends JFrame implements ActionListener {
         }
       
 
-        else if (sourceEvent == deleteAllButton) {
+        else if (sourceEvent == deleteLastButton) {
+
             DefaultTableModel model = (DefaultTableModel)productListTable.getModel();
+
+            for (int index = 0; index < productList.size(); ++ index) {
+                model.removeRow(index);  // empty all rows
+                updateTable();
+            }
+            
             makeEmpty(productList, model);
 
+        }
+
+
+        else if (sourceEvent == deleteAllButton) {
+            DefaultTableModel model = (DefaultTableModel)productListTable.getModel();
+/*
+            for (int index = 0; index < productList.size(); ++ index) {
+                model.removeRow(index);  // empty all rows
+                updateTable();                
+            }
+            */
+
+            makeEmpty(productList, model);
             updateTable();
+
         }
 
 
