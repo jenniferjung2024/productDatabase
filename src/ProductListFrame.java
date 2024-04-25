@@ -91,7 +91,7 @@ public class ProductListFrame extends JFrame implements ActionListener {
         deleteAllButton.addActionListener(this);
         
         deleteLastButton = new JButton("Delete Last");
-        deleteLastButton.addActionListener(this);
+        deleteLastButton.addActionListener((ActionEvent ae) -> deleteLastButtonClicked());
 
         // Initialize table
         DefaultTableModel model = new DefaultTableModel(columnHeadings, 0);
@@ -305,6 +305,24 @@ public class ProductListFrame extends JFrame implements ActionListener {
     }
 
     /* Called when either button is pressed. */
+
+    public void deleteLastButtonClicked() {
+
+        DefaultTableModel model = (DefaultTableModel)productListTable.getModel();
+        
+        
+        if (!productList.isEmpty()) {
+            for (int index = 0; index < productList.size(); ++index) {
+                model.removeRow(index);  // empty roW
+                updateTable();
+                productList.remove(productList.size() - 1);
+            }
+        }
+            else
+                JOptionPane.showMessageDialog(this, "No product in database to delete.");
+    }
+
+
     @Override
     public void actionPerformed(ActionEvent event) {
 
@@ -349,23 +367,15 @@ public class ProductListFrame extends JFrame implements ActionListener {
 
         else if (sourceEvent == deleteLastButton) {
 
-            DefaultTableModel model = (DefaultTableModel)productListTable.getModel();
-
-            for (int index = 0; index < productList.size(); ++ index) {
-                model.removeRow(index);  // empty all rows
-                updateTable();
-            }
-            
-            makeEmpty(productList, model);
-
         }
+
 
 
         else if (sourceEvent == deleteAllButton) {
             DefaultTableModel model = (DefaultTableModel)productListTable.getModel();
 /*
             for (int index = 0; index < productList.size(); ++ index) {
-                model.removeRow(index);  // empty all rows
+                model.removeRow(index);  // empty row
                 updateTable();                
             }
             */
