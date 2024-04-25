@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JTable;
 
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -33,6 +34,7 @@ public class ProductListFrame extends JFrame implements ActionListener {
     private JLabel departmentLabel;
     private JButton addButton;                 
     private JButton quitButton;
+    private JButton deleteAllButton;
     private JTable productListTable; 
 
 
@@ -58,13 +60,13 @@ public class ProductListFrame extends JFrame implements ActionListener {
         priceLabel = new JLabel("Price:");
         departmentLabel = new JLabel("Department:");
 
-        productIDField = new JTextField(20);
+        productIDField = new JTextField(6);
         productIDField.setEditable(true);
 
-        productNameField = new JTextField(20);
+        productNameField = new JTextField(15);
         productNameField.setEditable(true);
 
-        manufacturerField = new JTextField(20);
+        manufacturerField = new JTextField(15);
         manufacturerField.setEditable(true);
 
         currencyFormat = NumberFormat.getCurrencyInstance();
@@ -84,6 +86,9 @@ public class ProductListFrame extends JFrame implements ActionListener {
         quitButton = new JButton("Quit");
         quitButton.addActionListener(this);
 
+        deleteAllButton = new JButton("Delete All");
+        deleteAllButton.addActionListener(this);
+
         // Initialize table
         DefaultTableModel model = new DefaultTableModel(columnHeadings, 0);
         productListTable = new JTable(model);
@@ -94,9 +99,6 @@ public class ProductListFrame extends JFrame implements ActionListener {
          productList = new ArrayList<Product>();
         productListAddInitialElements(productList, model);
         
-        makeEmpty(productList, model);
-
-
         // Add components using GridBagLayout
         setLayout(new GridBagLayout());
 
@@ -135,7 +137,7 @@ public class ProductListFrame extends JFrame implements ActionListener {
         layoutConst.fill = GridBagConstraints.HORIZONTAL;
         layoutConst.gridx = 0;
         layoutConst.gridy = 4;
-        layoutConst.gridwidth = 1;
+        layoutConst.gridheight = 1;
         add(productIDField, layoutConst);
 
         layoutConst = new GridBagConstraints();
@@ -161,7 +163,7 @@ public class ProductListFrame extends JFrame implements ActionListener {
 
         layoutConst = new GridBagConstraints();
         layoutConst.insets = new Insets(1, 10, 10, 0);
-        layoutConst.fill = GridBagConstraints.HORIZONTAL;
+        // layoutConst.fill = GridBagConstraints.HORIZONTAL;
         layoutConst.gridx = 2;
         layoutConst.gridy = 4;
         add(manufacturerField, layoutConst);
@@ -192,7 +194,7 @@ public class ProductListFrame extends JFrame implements ActionListener {
         layoutConst.fill = GridBagConstraints.HORIZONTAL;
         layoutConst.gridx = 4;
         layoutConst.gridy = 4;
-        layoutConst.gridwidth = 2;
+        //layoutConst.gridwidth = 4;
         add(departmentSpinner, layoutConst);
 
         layoutConst = new GridBagConstraints();
@@ -208,6 +210,12 @@ public class ProductListFrame extends JFrame implements ActionListener {
         layoutConst.gridx = 1;
         layoutConst.gridy = 5;
         add(quitButton, layoutConst);
+
+        layoutConst = new GridBagConstraints();
+        layoutConst.insets = new Insets(0, 5, 10, 10);
+        layoutConst.gridx = 4;
+        layoutConst.gridy = 5;
+        add(deleteAllButton, layoutConst);
     }
 
     private void setDepartment(String[] departmentList) {
@@ -229,35 +237,60 @@ public class ProductListFrame extends JFrame implements ActionListener {
 
     public void productListAddInitialElements(ArrayList<Product> productArray, DefaultTableModel tableModel) {
 
-        final int INITIAL_PRODUCT_LIST_SIZE = 5; 
+        // final int INITIAL_PRODUCT_LIST_SIZE = 5; // as per instructions
 
-        Product product1 = new Product("Chicken Noodle Soup", 1.50);
-        product1.setProductID("0010");
-        product1.setDepartment("FOOD");
-        product1.setManufacturer("Campbell");
+        Product product = new Product("Chicken Noodle Soup", 1.99);
+        product.setProductID("0010");
+        product.setDepartment("FOOD");
+        product.setManufacturer("Campbell");
 
-        productArray.add(product1);
+        productArray.add(product);
 
-        /* 
-        for (int index = 0; index < INITIAL_PRODUCT_LIST_SIZE; ++index) {
-           productArray.add(new Product());
-        }
-        */
+        product = new Product("Ring Set - Gold, 7 pack", 9.99);
+        product.setProductID("0020");
+        product.setDepartment("ACCESSORIES");
+        product.setManufacturer("Claire's");
 
-        Object[] row = { productArray.get(0).getProductID(), productArray.get(0).getProductName(), productArray.get(0).getManufacturer(), productArray.get(0).getPrice(), productArray.get(0).getDepartment() };
-        tableModel.addRow(row);
+        productArray.add(product);
+
+        product = new Product("Traditional Soccer Ball - Size 5, Black/White", 23.99);
+        product.setProductID("0033");
+        product.setDepartment("SPORTING_GOODS");
+        product.setManufacturer("Wilson");
+
+        productArray.add(product);
+
+        product = new Product("Vinyl Ink Longwear No-Budge Liquid Lipcolor, Cheeky", 12.49);
+        product.setProductID("0045");
+        product.setDepartment("HEALTHandBEAUTY");
+        product.setManufacturer("Maybelline");
+
+        productArray.add(product);
+
+        product = new Product("Super-Plush Luxury Cotton Bath Towels - 2 pack", 69.99);
+        product.setProductID("0109");
+        product.setDepartment("HOME");
+        product.setManufacturer("Brooklinen");
+
+        productArray.add(product);
+
+        // for (int index = 0; index < INITIAL_PRODUCT_LIST_SIZE; ++index) {
+        for (int index = 0; index < productArray.size(); ++index) {  // more dynamic
+            Object[] row = { productArray.get(index).getProductID(), productArray.get(index).getProductName(), productArray.get(index).getManufacturer(), productArray.get(index).getPrice(), productArray.get(index).getDepartment() };
+            tableModel.addRow(row);
+        }       
 
     }
+    
 
     public static void makeEmpty(ArrayList<Product> productArray, DefaultTableModel tableModel) {
-
-
-        tableModel.removeRow(tableModel.getRowCount() - 1);
 
         int index;      // Loop index
         
         for (index = 0; index < productArray.size(); ++ index) {
-           productArray.get(index).makeEmpty();
+            // tableModel.removeRow(tableModel.getRowCount() - 1);  // empty all rows
+            productArray.get(index).makeEmpty();
+
 
         }
 
@@ -306,9 +339,18 @@ public class ProductListFrame extends JFrame implements ActionListener {
         }
       
 
+        else if (sourceEvent == deleteAllButton) {
+            DefaultTableModel model = (DefaultTableModel)productListTable.getModel();
+            makeEmpty(productList, model);
+
+            updateTable();
+        }
+
+
         else if (sourceEvent == quitButton) {
             dispose();                               // Terminate program
         }
+
     }
 
 
