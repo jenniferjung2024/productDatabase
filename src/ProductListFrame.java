@@ -314,12 +314,10 @@ public class ProductListFrame extends JFrame implements ActionListener {
         
         
         if (!productList.isEmpty()) {
-            for (int index = 0; index < productList.size(); ++index) {
-                model.removeRow(index);  // empty roW
-                updateTable();
+                model.removeRow(productList.size() - 1);  // empty row
                 productList.remove(productList.size() - 1);
+                updateTable();
             }
-        }
             else
                 JOptionPane.showMessageDialog(this, "No product in database to delete.");
 
