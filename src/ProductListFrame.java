@@ -375,10 +375,12 @@ public class ProductListFrame extends JFrame implements ActionListener {
 
         else if (sourceEvent == deleteAllButton) {
             DefaultTableModel model = (DefaultTableModel)productListTable.getModel();
-/*
+            
+            /*
             for (int index = 0; index < productList.size(); ++ index) {
                 model.removeRow(index);  // empty row
                 updateTable();                
+                productList.remove(productList.size()-1);  // doesn't do anything in particular
             }
             */
 
