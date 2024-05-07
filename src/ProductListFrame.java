@@ -91,6 +91,7 @@ public class ProductListFrame extends JFrame implements ActionListener {
         deleteAllButton.addActionListener(this);
         
         deleteLastButton = new JButton("Delete Last");
+        // deleteLastButton.addActionListener(this);
         deleteLastButton.addActionListener((ActionEvent ae) -> deleteLastButtonClicked());
 
         // Initialize table
@@ -308,6 +309,7 @@ public class ProductListFrame extends JFrame implements ActionListener {
 
     public void deleteLastButtonClicked() {
 
+        
         DefaultTableModel model = (DefaultTableModel)productListTable.getModel();
         
         
@@ -320,7 +322,9 @@ public class ProductListFrame extends JFrame implements ActionListener {
         }
             else
                 JOptionPane.showMessageDialog(this, "No product in database to delete.");
+
     }
+
 
 
     @Override
