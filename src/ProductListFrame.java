@@ -91,7 +91,8 @@ public class ProductListFrame extends JFrame implements ActionListener {
         deleteAllButton.addActionListener(this);
         
         deleteLastButton = new JButton("Delete Last");
-        deleteLastButton.addActionListener(this);
+        // deleteLastButton.addActionListener(this);
+        deleteLastButton.addActionListener((ActionEvent ae) -> deleteLastButtonClicked());
 
         // Initialize table
         DefaultTableModel model = new DefaultTableModel(columnHeadings, 0);
@@ -305,6 +306,25 @@ public class ProductListFrame extends JFrame implements ActionListener {
     }
 
     /* Called when either button is pressed. */
+
+    public void deleteLastButtonClicked() {
+
+        
+        DefaultTableModel model = (DefaultTableModel)productListTable.getModel();
+        
+        
+        if (!productList.isEmpty()) {
+                model.removeRow(productList.size() - 1);  // empty row
+                productList.remove(productList.size() - 1);
+                updateTable();
+            }
+            else
+                JOptionPane.showMessageDialog(this, "No product in database to delete.");
+
+    }
+
+
+
     @Override
     public void actionPerformed(ActionEvent event) {
 
@@ -349,14 +369,8 @@ public class ProductListFrame extends JFrame implements ActionListener {
 
         else if (sourceEvent == deleteLastButton) {
 
-            DefaultTableModel model = (DefaultTableModel)productListTable.getModel();
-
-            for (int index = 0; index < productList.size(); ++ index) {
-                model.removeRow(index);  // empty all rows
-                updateTable();
-            }
-            
         }
+
 
 
         else if (sourceEvent == deleteAllButton) {
@@ -364,10 +378,7 @@ public class ProductListFrame extends JFrame implements ActionListener {
             
             /*
             for (int index = 0; index < productList.size(); ++ index) {
-            
-                // productList.remove(productList.size()-1); // remove elements in array, but removes too many in first click
-
-                model.removeRow(index);  // empty  row
+                model.removeRow(index);  // empty row
                 updateTable();                
                 productList.remove(productList.size()-1);  // doesn't do anything in particular
             }
