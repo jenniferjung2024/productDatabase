@@ -91,8 +91,8 @@ public class ProductListFrame extends JFrame implements ActionListener {
         deleteAllButton.addActionListener(this);
         
         deleteLastButton = new JButton("Delete Last");
-        // deleteLastButton.addActionListener(this);
         deleteLastButton.addActionListener((ActionEvent ae) -> deleteLastButtonClicked());
+        // deleteLastButton.addActionListener((ActionEvent ae) -> ButtonActions.DeleteLastAction(productList, productListTable));
 
         // Initialize table
         DefaultTableModel model = new DefaultTableModel(columnHeadings, 0);
@@ -309,7 +309,6 @@ public class ProductListFrame extends JFrame implements ActionListener {
 
     public void deleteLastButtonClicked() {
 
-        
         DefaultTableModel model = (DefaultTableModel)productListTable.getModel();
         
         
@@ -365,12 +364,7 @@ public class ProductListFrame extends JFrame implements ActionListener {
             // Show success dialog
             JOptionPane.showMessageDialog(this, "Product Added.");
         }
-      
-
-        else if (sourceEvent == deleteLastButton) {
-
-        }
-
+    
 
 
         else if (sourceEvent == deleteAllButton) {
